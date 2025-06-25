@@ -73,6 +73,12 @@
         delay: 10,
         time: 2000
     });
+    // Force trigger CounterUp on visible counters in case already in view
+    $('[data-toggle="counter-up"]').each(function() {
+        if ($(this).is(':visible')) {
+            $(this).trigger('waypoint.reached');
+        }
+    });
 
 
     // Header carousel
