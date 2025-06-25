@@ -364,18 +364,18 @@
 /*** Testimonial ***/
 .testimonial-carousel .owl-item .testimonial-item {
     position: relative;
-    transition: 0.7s;
+    transition: 0.25s;
 }
 
 .testimonial-carousel .owl-item.center .testimonial-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
-    animation: pulse 0.7s ease-out 0.1s;
+    animation: pulse 0.25s ease-out 0.05s;
 }
 
 .testimonial-carousel .owl-item.center .testimonial-item .animated, 
 .testimonial-carousel .owl-item.center .testimonial-item .wow {
-    animation-duration: 0.7s !important;
-    animation-delay: 0.1s !important;
+    animation-duration: 0.25s !important;
+    animation-delay: 0.05s !important;
 }
 
 .testimonial-carousel .owl-dots {
@@ -393,7 +393,7 @@
     background: var(--primary);
     border: 5px solid var(--light);
     border-radius: 15px;
-    transition: .5s;
+    transition: 0.25s;
 }
 
 .testimonial-carousel .owl-dot.active {
