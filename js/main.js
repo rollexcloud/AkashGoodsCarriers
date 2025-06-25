@@ -13,7 +13,18 @@
     
     
     // Initiate the wowjs
-    new WOW().init();
+    new WOW({
+        boxClass:     'wow',      // default
+        animateClass: 'animated', // default
+        offset:       0,          // default
+        mobile:       true,       // default
+        live:         true,       // default
+        callback:     null,
+        scrollContainer: null,
+        resetAnimation: true,
+        duration: '0.7s', // custom: speed up animations
+        delay: '0.1s'     // custom: reduce delay
+    }).init();
 
 
     // Sticky Navbar
@@ -84,7 +95,7 @@
     // Header carousel
     $(".header-carousel").owlCarousel({
         autoplay: false,
-        smartSpeed: 1500,
+        smartSpeed: 500,
         items: 1,
         dots: false,
         loop: true,
