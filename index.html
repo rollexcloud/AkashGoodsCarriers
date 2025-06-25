@@ -337,30 +337,39 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="bg-light text-center p-5 wow fadeIn" data-wow-delay="0.5s">
-                        <form>
+                        <form id="quoteForm" action="https://formspree.io/f/xovwkbpz" method="POST">
                             <div class="row g-3">
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Name" style="height: 55px;">
+                                    <input type="text" name="name" class="form-control border-0" placeholder="Your Name" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control border-0" placeholder="Your Email" style="height: 55px;">
+                                    <input type="email" name="email" class="form-control border-0" placeholder="Your Email" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control border-0" placeholder="Your Mobile" style="height: 55px;">
+                                    <input type="text" name="mobile" class="form-control border-0" placeholder="Your Mobile" style="height: 55px;" required>
                                 </div>
                                 <div class="col-12 col-sm-6">
-                                    <select class="form-select border-0" style="height: 55px;">
-                                        <option selected>-- Select --</option>
-                                        <option value="1">Full Truck Load</option>
-                                        <option value="2">Partial Truck load</option>
-                                        <option value="3">Rent/Hire</option>
+                                    <select name="serviceType" class="form-select border-0" style="height: 55px;" required>
+                                        <option value="" selected disabled>-- Select --</option>
+                                        <option value="Full Truck Load">Full Truck Load</option>
+                                        <option value="Partial Truck load">Partial Truck load</option>
+                                        <option value="Rent/Hire">Rent/Hire</option>
                                     </select>
                                 </div>
                                 <div class="col-12">
-                                    <textarea class="form-control border-0" placeholder="Special Note"></textarea>
+                                    <textarea name="note" class="form-control border-0" placeholder="Special Note"></textarea>
                                 </div>
                                 <div class="col-12">
                                     <button class="btn btn-primary w-100 py-3" type="submit">Submit</button>
+                                </div>
+                                <div class="col-12">
+                                    <div id="formValidationError" class="alert alert-danger mt-3 d-none" role="alert"></div>
+                                    <div id="formSuccess" class="alert alert-success mt-3 d-none" role="alert">
+                                        Thank you! Your quote request has been received.
+                                    </div>
+                                    <div id="formError" class="alert alert-danger mt-3 d-none" role="alert">
+                                        Sorry, there was an error sending your request. Please try again later.
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -515,6 +524,68 @@
     <!-- Template Javascript -->
     <!-- Leaflet JS -->
     <script src="lib/leaflet/leaflet.js"></script>
+
+<script>
+// AJAX Formspree submission for quote form with validation
+const quoteForm = document.getElementById('quoteForm');
+if (quoteForm) {
+    quoteForm.addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formSuccess = document.getElementById('formSuccess');
+        const formError = document.getElementById('formError');
+        const formValidationError = document.getElementById('formValidationError');
+        if (formSuccess) formSuccess.classList.add('d-none');
+        if (formError) formError.classList.add('d-none');
+        if (formValidationError) {
+            formValidationError.classList.add('d-none');
+            formValidationError.innerText = '';
+        }
+        // Validation
+        const emailInput = quoteForm.querySelector('input[name="email"]');
+        const mobileInput = quoteForm.querySelector('input[name="mobile"]');
+        const email = emailInput.value.trim();
+        const mobile = mobileInput.value.trim();
+        let valid = true;
+        let errorMsg = '';
+        // Email regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            valid = false;
+            errorMsg += 'Please enter a valid email address. ';
+        }
+        // Mobile: must be 10 digits
+        const mobileRegex = /^\d{10}$/;
+        if (!mobileRegex.test(mobile)) {
+            valid = false;
+            errorMsg += 'Please enter a valid 10-digit mobile number.';
+        }
+        if (!valid) {
+            if (formValidationError) {
+                formValidationError.innerText = errorMsg;
+                formValidationError.classList.remove('d-none');
+            }
+            return;
+        }
+        // If valid, submit via AJAX
+        const formData = new FormData(quoteForm);
+        try {
+            const response = await fetch(quoteForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: { 'Accept': 'application/json' }
+            });
+            if (response.ok) {
+                if (formSuccess) formSuccess.classList.remove('d-none');
+                quoteForm.reset();
+            } else {
+                if (formError) formError.classList.remove('d-none');
+            }
+        } catch (error) {
+            if (formError) formError.classList.remove('d-none');
+        }
+    });
+}
+</script>
 </body>
 
 </html>
