@@ -21,7 +21,7 @@
 
 
 /*** Spinner ***/
-#spinner {
+/* #spinner {
     opacity: 0;
     visibility: hidden;
     transition: opacity .5s ease-out, visibility 0s linear .5s;
@@ -32,7 +32,7 @@
     transition: opacity .5s ease-out, visibility 0s linear 0s;
     visibility: visible;
     opacity: 1;
-}
+} */
 
 
 /*** Button ***/
@@ -480,4 +480,8 @@
 
 .footer .copyright a {
     color: var(--light);
+}
+
+.footer .copyright a:hover{
+    color: var(--primary);
 }
