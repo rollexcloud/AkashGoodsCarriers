@@ -86,10 +86,11 @@
 }
 
 .navbar-light .navbar-nav .nav-link {
+    
     position: relative;
     margin-right: 30px;
     padding: 25px 0;
-    color: #FFFFFF;
+    color: #0a0000;
     font-size: 15px;
     text-transform: uppercase;
     outline: none;
